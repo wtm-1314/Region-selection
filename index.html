@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>省市区-zay</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <select name="province" id="province" class="setProvince" onchange='handleClick()'>
+    <option value="''">省</option>
+  </select>
+
+  <select name="province" id="city" class="setProvince" onchange='handleClickCity()'>
+    <option value="''">市</option>
+  </select>
+
+  <select name="province" id="area" class="setProvince" onchange='handleClickArea()'>
+    <option value="''">区</option>
+  </select>
+  <script src="./index.js">
+  </script>
+  <script>
+    // 选择省
+    let el = document.getElementById('province')
+    var fragment = document.createDocumentFragment();
+    data.forEach(item => {
+      var option = document.createElement('option');
+      option.textContent = item.name;
+      option.value = item.name;
+      fragment.appendChild(option);　　// 此处往文档片段插入子节点，不会引起回流 （相当于打包操作）
+    });
+    el.appendChild(fragment);
+    let citys = []
+    /**
+     * 省
+    */
+    function handleClick() {
+      // 清空市区，
+      let pro = document.getElementById('province').value
+      let city = document.getElementById('city')
+      let area = document.getElementById('area')
+      let html = "<option value='市'>市</option>"
+      //  对这个数据·处理
+      let cityList = data.find(item => {
+        return pro == item.name
+      })
+      // 改变省的值，区为空，省自动改变
+      area.innerHTML = "<option value='区'>区</option>"
+      if (!cityList) {
+        city.innerHTML = html
+        return
+      }
+      console.log(cityList);
+      citys = cityList
+      cityList.city.forEach(item => {
+
+        html += `<option value=${item.name}>${item.name}</option>`
+
+      })
+      city.innerHTML = html
+    }
+    /**
+    * 市
+    */
+
+    function handleClickCity() {
+      // 得到市的值
+      let city = document.getElementById('city').value
+      // 得到市区的所有值
+      let area = document.getElementById('area')
+      let html = "<option value=''>区</option>"
+      // 找到是这个城市的区
+      let cityArea = citys.city.find(item => {
+        return city == item.name
+      })
+      if (!cityArea) {
+        area.innerHTML = html
+        return
+      }
+
+
+      cityArea.area.forEach(v => {
+        html += `<option value=${v}>${v}</option>`
+      })
+      area.innerHTML = html
+
+
+    }
+    /*
+    * 区
+    */
+    function handleClickArea() {
+      const province = document.getElementById('province').value
+      const city = document.getElementById('city').value
+      const area = document.getElementById('area').value
+      // 选择就是结果
+      console.log(province, city, area);
+      return province & city & area
+    }
+  </script>
+</body>
+
+</html>

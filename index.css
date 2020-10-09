@@ -1,0 +1,14 @@
+.setProvince{
+  min-width: 5rem;
+  height: 1.6rem;
+  line-height: 1.6rem;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  border-radius: 4px;
+  text-indent: 4px;
+  /* border-color: blueviolet; */
+  /* border: none;  */
+   outline: none; 
+  
+}
